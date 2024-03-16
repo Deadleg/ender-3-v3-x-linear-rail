@@ -1,0 +1,114 @@
+[
+    {
+        "name": "carriage_assembly",
+        "big": null,
+        "ngb": false,
+        "zoomed": 0,
+        "count": 1,
+        "assemblies": {},
+        "vitamins": {
+            "nut(M5_nut): Nut M5 x 4mm ": {
+                "count": 2
+            }
+        },
+        "printed": {
+            "toolhead_carriage_MGN9C.stl": {
+                "count": 1,
+                "colour": "[0, 0.572549, 0]"
+            },
+            "toolhead_carriage_MGN9H.stl": {
+                "count": 1,
+                "colour": "[0, 0.572549, 0]"
+            }
+        },
+        "routed": {}
+    },
+    {
+        "name": "linear_rail_assembly",
+        "big": null,
+        "ngb": false,
+        "zoomed": 0,
+        "count": 1,
+        "assemblies": {},
+        "vitamins": {
+            "rail(MGN9, 300): Linear rail MGN9 x 300mm": {
+                "count": 1
+            },
+            "carriage(MGN9C_carriage): Linear rail carriage MGN9C": {
+                "count": 1
+            },
+            "screw(M3_cap_screw, 10): Screw M3 cap x 10mm": {
+                "count": 7
+            },
+            "sliding_t_nut(M3_hammer_nut): Nut M3 hammer": {
+                "count": 7
+            }
+        },
+        "printed": {
+            "middle_spacer.stl": {
+                "count": 1,
+                "colour": "[0, 0.572549, 0]"
+            },
+            "right_spacer.stl": {
+                "count": 1,
+                "colour": "[0, 0.572549, 0]"
+            },
+            "left_spacer.stl": {
+                "count": 1,
+                "colour": "[0, 0.572549, 0]"
+            }
+        },
+        "routed": {}
+    },
+    {
+        "name": "carriage_rail_assembly",
+        "big": null,
+        "ngb": false,
+        "zoomed": 0,
+        "count": 1,
+        "assemblies": {
+            "linear_rail_assembly": 1,
+            "carriage_assembly": 1
+        },
+        "vitamins": {
+            "washer(M3_washer): Washer  M3 x 7mm x 0.5mm": {
+                "count": 4
+            },
+            "screw(M3_cap_screw, 8): Screw M3 cap x  8mm": {
+                "count": 4
+            }
+        },
+        "printed": {},
+        "routed": {}
+    },
+    {
+        "name": "toolhead_carriage_assembly",
+        "big": null,
+        "ngb": false,
+        "zoomed": 0,
+        "count": 1,
+        "assemblies": {
+            "carriage_rail_assembly": 1
+        },
+        "vitamins": {
+            "screw(M5_wafer_screw, 6): Screw M5 wafer head x  6mm": {
+                "count": 2
+            }
+        },
+        "printed": {},
+        "routed": {}
+    },
+    {
+        "name": "main_assembly",
+        "big": null,
+        "ngb": false,
+        "zoomed": 0,
+        "count": 1,
+        "assemblies": {
+            "toolhead_carriage_assembly": 1
+        },
+        "vitamins": {},
+        "printed": {},
+        "routed": {}
+    }
+]

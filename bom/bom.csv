@@ -1,0 +1,9 @@
+'Linear rail carriage MGN9C',  1
+'Nut M5 x 4mm ',  2,2.00,'=B2*C2',None
+'Linear rail MGN9 x 300mm',  1,20.00,'=B3*C3',None
+'Screw M3 cap x 10mm',  7,2.00,'=B4*C4',None
+'Screw M3 cap x  8mm',  4,2.00,'=B5*C5',None
+'Screw M5 wafer head x  6mm',  2,2.00,'=B6*C6',https://www.aliexpress.com/item/1005005070119421.html?spm=a2g0o.order_list.order_list_main.102.463c1802BoQpbq
+'Nut M3 hammer',  7,2.00,'=B7*C7',None
+'Washer  M3 x 7mm x 0.5mm',  4,2.00,'=B8*C8',None
+,'=SUM(B1:B8)',,'=SUM(D1:D8)'

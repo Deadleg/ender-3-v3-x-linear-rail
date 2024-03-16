@@ -1,0 +1,8 @@
+*.txt
+deps/
+*.echo
+*.log
+bounds.json
+*.deps
+__pycache__
+*.html
