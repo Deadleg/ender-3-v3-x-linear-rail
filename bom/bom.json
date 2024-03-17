@@ -32,7 +32,7 @@
         "assemblies": {},
         "vitamins": {
             "rail(MGN9, 300): Linear rail MGN9 x 300mm": {
-                "count": 1
+                "count": 7
             },
             "carriage(MGN9C_carriage): Linear rail carriage MGN9C": {
                 "count": 1

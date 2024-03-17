@@ -5,7 +5,8 @@
 //!
 //! - **Dimensional accuracy and flow calibration is required in order for the nut trap to fit the nuts securely**.
 //! - [BOM](bom/bom.csv).
-//!   - Either an MGN9C or MGN9H carriage can be used. Ideally use rails with some preload to improve wobble along the Y axis.
+//!   - Either an MGN9C or MGN9H carriage can be used. Ideally use rails with some preload to improve wobble along the Y
+//!   axis.
 //! - Use [Voron print settings](https://docs.vorondesign.com/sourcing.html#print-settings).
 //!   - Probably avoid PLA due to the nut trap only being two walls thick.
 //! - No additional supports required.
@@ -64,7 +65,7 @@ tolerance = 0.1;
 
 mounting_carriage = carriage_type == "MGN9C" ? MGN9C_carriage : MGN9H_carriage;
 
-rail_offset = 2.8; // The mounting blocks of the original model.
+rail_offset = 2.8 - 0.4; // The mounting blocks of the original model.
 
 print_orientation = print_component != "None";
 
@@ -75,10 +76,10 @@ rail_pos = 60;
 $fn = 60;
 
 M5x4 = [ "M5x4", 4, 10, 8.5, 5, 7.5, 0.5, 7.5, 7.5, 3.5, 0.8 ];
-block_width = 14;
+block_width = 15;
 middle_block_width = rail_pitch(MGN9) * 3 - 1;
 
-block_depth = 0.8;
+block_depth = 0.6;
 
 end_block_width = rail_pitch(MGN9) * 2 - 1;
 
@@ -184,12 +185,14 @@ module middle_spacer_stl()
 {
     stl("middle_spacer")
     {
-        difference()
+        rotate([ 0, 90, 0 ]) difference()
         {
             translate([ -middle_block_width / 2, -block_width / 2, -rail_offset - block_depth ])
-                cube([ middle_block_width, block_width, rail_offset + block_depth ]);
+                cube([ middle_block_width, block_width, rail_offset + block_depth + 1.6 ]);
             translate([ -150, 0, -extrusion_height(E2020) / 2 - rail_offset + tolerance ]) rotate([ 0, 90, 0 ])
                 V_slot("20x20", 300);
+            translate([ 0, -tolerance, 0 ]) hull() rail(MGN9, 300);
+            translate([ 0, tolerance, 0 ]) hull() rail(MGN9, 300);
 
             translate([ 0, 0, -rail_offset * 2 ])
                 rail_hole_positions(MGN9, middle_block_width, first = 0, screws = 3, both_ends = true)
@@ -213,16 +216,19 @@ module two_hole_spacer(is_left)
         {
 
             translate([ -end_block_width / 2, -block_width / 2 + trim_distance, -rail_offset - block_depth ])
-                cube([ end_block_width, block_width - trim_distance, rail_offset + block_depth ]);
+                cube([ end_block_width, block_width - trim_distance, rail_offset + block_depth + 1.6 ]);
             if (is_left == false)
             {
                 translate([ 12 - end_block_width / 2, -block_width / 2, -rail_offset - block_depth ])
-                    cube([ end_block_width - 12, block_width, rail_offset + block_depth ]);
+                    cube([ end_block_width - 12, block_width, rail_offset + block_depth + 1.6 ]);
             }
         }
         // translate([ 0, 0, -extrusion_height(E2020) / 2 - rail_offset ]) rotate([ 0, 90, 0 ]) extrusion(E2020, 300);
         translate([ -150, 0, -extrusion_height(E2020) / 2 - rail_offset + tolerance ]) rotate([ 0, 90, 0 ])
             V_slot("20x20", 300);
+
+        translate([ 0, -tolerance, 0 ]) hull() rail(MGN9, 300);
+        translate([ 0, tolerance, 0 ]) hull() rail(MGN9, 300);
 
         translate([ 0, 0, -rail_offset * 2 ])
             rail_hole_positions(MGN9, end_block_width, first = 0, screws = 2, both_ends = true)
@@ -261,29 +267,29 @@ module end_spacer_screws()
 
 module left_spacer_stl()
 {
-    stl("left_spacer") two_hole_spacer(is_left = true);
+    stl("left_spacer") rotate([ 0, 90, 0 ]) two_hole_spacer(is_left = true);
 }
 
 module right_spacer_stl()
 {
-    stl("right_spacer") two_hole_spacer(is_left = false);
+    stl("right_spacer") rotate([ 0, 90, 0 ]) two_hole_spacer(is_left = false);
 }
 
 module left_spacer_assembly()
 {
-    explode(6) left_spacer_stl();
+    explode(6) rotate([ 0, $preview ? -90 : 0 ]) left_spacer_stl();
     end_spacer_screws();
 }
 
 module right_spacer_assembly()
 {
-    explode(6) right_spacer_stl();
+    explode(6) rotate([ 0, $preview ? -90 : 0 ]) right_spacer_stl();
     end_spacer_screws();
 }
 
 module middle_spacer_assembly()
 {
-    explode(6) middle_spacer_stl();
+    explode(6) rotate([ 0, $preview ? -90 : 0 ]) middle_spacer_stl();
     middle_spacer_screws();
 }
 
@@ -433,12 +439,12 @@ module toolhead_carriage_base(mounting_carriage)
 
             color("blue")
             {
-                support();
-                translate([ 0, 0, 4.4 ]) support();
+                translate([ 0, 0, 1.4 ]) support();
+                translate([ 0, 0, 4.6 ]) support();
             }
 
             // bracket
-            bracket_height = 16.5 + 1;
+            bracket_height = 16.5 + 1 - 1.4;
 
             translate([
                 -carriage_length(MGN9C_carriage) / 2 - bracket_extra_width / 2,
@@ -455,10 +461,10 @@ module toolhead_carriage_base(mounting_carriage)
 
             rotate([ -90, 90, 180 ])
                 translate([ 0, (carriage_length(MGN9C_carriage) + bracket_extra_width) / 2 - 5, -10.5 + 1 ])
-                    right_triangle([ 8, 5, 10 ]);
+                    right_triangle([ 7.6, 5, 9.8 ]);
             rotate([ -90, 90, 180 ])
                 translate([ 0, -((carriage_length(MGN9C_carriage) + bracket_extra_width) / 2), -10.5 + 1 ])
-                    right_triangle([ 8, 5, 10 ]);
+                    right_triangle([ 7.6, 5, 9.8 ]);
 
             translate([
                 (carriage_length(MGN9C_carriage) + bracket_extra_width) / 2 - 5, 5,

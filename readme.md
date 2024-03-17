@@ -7,7 +7,8 @@ _want_ linear rails like I did, then enjoy.
 
 - **Dimensional accuracy and flow calibration is required in order for the nut trap to fit the nuts securely**.
 - [BOM](bom/bom.csv).
-  - Either an MGN9C or MGN9H carriage can be used. Ideally use rails with some preload to improve wobble along the Y axis.
+  - Either an MGN9C or MGN9H carriage can be used. Ideally use rails with some preload to improve wobble along the Y
+  axis.
 - Use [Voron print settings](https://docs.vorondesign.com/sourcing.html#print-settings).
   - Probably avoid PLA due to the nut trap only being two walls thick.
 - No additional supports required.
@@ -58,7 +59,7 @@ PYTHONPATH=$PWD ~/.local/share/OpenSCAD/libraries/NopSCADlib/scripts/make_all.py
 | <span style="writing-mode: vertical-rl; text-orientation: mixed;">Carriage</span> | <span style="writing-mode: vertical-rl; text-orientation: mixed;">Linear&nbsp;Rail</span> | <span style="writing-mode: vertical-rl; text-orientation: mixed;">Carriage&nbsp;Rail</span> | <span style="writing-mode: vertical-rl; text-orientation: mixed;">Toolhead&nbsp;Carriage</span> | <span style="writing-mode: vertical-rl; text-orientation: mixed;">TOTALS</span> |  |
 |---:|---:|---:|---:|---:|:---|
 |  |  |  |  | | **Vitamins** |
-| &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;1&nbsp; | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;.&nbsp; |  &nbsp;&nbsp;1&nbsp; | &nbsp;&nbsp; Linear rail MGN9 x 300mm |
+| &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;7&nbsp; | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;.&nbsp; |  &nbsp;&nbsp;7&nbsp; | &nbsp;&nbsp; Linear rail MGN9 x 300mm |
 | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;1&nbsp; | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;.&nbsp; |  &nbsp;&nbsp;1&nbsp; | &nbsp;&nbsp; Linear rail carriage MGN9C |
 | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;7&nbsp; | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;.&nbsp; |  &nbsp;&nbsp;7&nbsp; | &nbsp;&nbsp; Nut M3 hammer |
 | &nbsp;&nbsp;2&nbsp; | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;.&nbsp; |  &nbsp;&nbsp;2&nbsp; | &nbsp;&nbsp; Nut M5 x 4mm  |
@@ -66,7 +67,7 @@ PYTHONPATH=$PWD ~/.local/share/OpenSCAD/libraries/NopSCADlib/scripts/make_all.py
 | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;7&nbsp; | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;.&nbsp; |  &nbsp;&nbsp;7&nbsp; | &nbsp;&nbsp; Screw M3 cap x 10mm |
 | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;2&nbsp; |  &nbsp;&nbsp;2&nbsp; | &nbsp;&nbsp; Screw M5 wafer head x  6mm |
 | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;4&nbsp; | &nbsp;&nbsp;.&nbsp; |  &nbsp;&nbsp;4&nbsp; | &nbsp;&nbsp; Washer  M3 x 7mm x 0.5mm |
-| &nbsp;&nbsp;2&nbsp; | &nbsp;&nbsp;16&nbsp; | &nbsp;&nbsp;8&nbsp; | &nbsp;&nbsp;2&nbsp; | &nbsp;&nbsp;28&nbsp; | &nbsp;&nbsp;Total vitamins count |
+| &nbsp;&nbsp;2&nbsp; | &nbsp;&nbsp;22&nbsp; | &nbsp;&nbsp;8&nbsp; | &nbsp;&nbsp;2&nbsp; | &nbsp;&nbsp;34&nbsp; | &nbsp;&nbsp;Total vitamins count |
 |  |  |  |  | | **3D printed parts** |
 | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;1&nbsp; | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;.&nbsp; |  &nbsp;&nbsp;1&nbsp; | &nbsp;&nbsp;left_spacer.stl |
 | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;1&nbsp; | &nbsp;&nbsp;.&nbsp; | &nbsp;&nbsp;.&nbsp; |  &nbsp;&nbsp;1&nbsp; | &nbsp;&nbsp;middle_spacer.stl |
@@ -116,7 +117,7 @@ blobbing due to lack of pressure advance and/or insert an M5 screw from the othe
 ### Vitamins
 |Qty|Description|
 |---:|:----------|
-|1| Linear rail MGN9 x 300mm|
+|7| Linear rail MGN9 x 300mm|
 |1| Linear rail carriage MGN9C|
 |7| Nut M3 hammer|
 |7| Screw M3 cap x 10mm|
