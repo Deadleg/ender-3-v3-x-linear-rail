@@ -48,7 +48,7 @@ show_toolhead = true;
 mount_thickness = 7;
 mount_extra_width = 1;
 
-bracket_mount_screw_x = 31;
+bracket_mount_screw_x = 32;
 
 metal_braket_space = 4;
 
@@ -87,14 +87,11 @@ module toolhead()
 {
     not_on_bom()
     {
-        if (_show_rail)
+        if (_show_rail && show_toolhead)
         {
-            if (show_toolhead)
-            {
-                // Offset is eyeballed.
-                color([ 0.3, 0.3, 0.3 ]) translate([ -1.45 + rail_pos, 16, 19 + 3.5 - rail_offset ])
-                    rotate([ 0, 0, 180 ]) import("../ender-3-v3-se-reference-models-step-files/full-toolhead.stl");
-            }
+            // Offset is eyeballed.
+            color([ 0.3, 0.3, 0.3 ]) translate([ -2.45 + rail_pos, 16, 19 + 3.5 - rail_offset ]) rotate([ 0, 0, 180 ])
+                import("../ender-3-v3-se-reference-models-step-files/full-toolhead.stl");
         }
     }
 }
@@ -107,7 +104,7 @@ module toolhead_frame()
         {
             if (show_toolhead)
             {
-                color([ 0.3, 0.3, 0.3 ]) translate([ 30 + rail_pos, 14.8, 19.1 + 3.5 - rail_offset ])
+                color([ 0.3, 0.3, 0.3 ]) translate([ 28 + rail_pos, 14.8, 19.1 + 3.5 - rail_offset ])
                     rotate([ 0, 0, 180 ]) import("../ender-3-v3-se-reference-models-step-files/frame.stl");
             }
         }
@@ -305,8 +302,8 @@ module frame_screws()
         rotate([ 0, print_orientation ? 90 : 0, 0 ]) translate([ rail_pos, 0, carriage_height(mounting_carriage) ])
             translate([ 0, 14.9 + 2, 2.5 - rail_offset ])
         {
-            translate([ bracket_mount_screw_x / 2, 0, 0 ]) rotate([ -90, 0, 0 ]) screw(M5_flat_screw, 6);
-            translate([ -bracket_mount_screw_x / 2, 0, 0 ]) rotate([ -90, 0, 0 ]) screw(M5_flat_screw, 6);
+            translate([ bracket_mount_screw_x / 2, 0, 0 ]) rotate([ -90, 0, 0 ]) screw(M5_flat_screw, 4);
+            translate([ -bracket_mount_screw_x / 2, 0, 0 ]) rotate([ -90, 0, 0 ]) screw(M5_flat_screw, 4);
         }
     }
 }
@@ -322,6 +319,14 @@ module m5_screw_holes()
     }
 }
 
+module pcb_screw_holes()
+{
+    translate([ -9, 14.41, 2.5 - rail_offset ])
+    {
+        translate([ bracket_mount_screw_x / 2, 0, 0 ]) rotate([ 0, -90, 0 ]) teardrop(2, h = 0.4);
+        translate([ -bracket_mount_screw_x / 2, 0, 0 ]) rotate([ 0, -90, 0 ]) teardrop(2, h = 0.4);
+    }
+}
 module carriage_nut_trap()
 {
     n = mount_type == "Hex nut" ? M5_nut : M5nS_thin_nut;
@@ -437,42 +442,49 @@ module toolhead_carriage_base(mounting_carriage)
                 };
             }
 
-            color("blue")
+            // interface
+            interface_height = 16.5 + 1 - 1.4;
+
+            difference()
             {
-                translate([ 0, 0, 1.4 ]) support();
-                translate([ 0, 0, 4.6 ]) support();
+                translate([
+                    -carriage_length(MGN9C_carriage) / 2 - bracket_extra_width / 2,
+                    mount_extra_width / 2 + carriage_width(mounting_carriage) / 2 - 0.2,
+                    -(interface_height - mount_thickness) + 1
+                ])
+                {
+                    cube([
+                        carriage_length(MGN9C_carriage) + bracket_extra_width,
+                        metal_braket_space - mount_extra_width / 2 + 0.8,
+                        interface_height
+                    ]);
+                }
             }
 
-            // bracket
-            bracket_height = 16.5 + 1 - 1.4;
+            // H carriage needs a little room for the wiper screws.
+            brace_thickness = mounting_carriage == MGN9C_carriage ? 5 : 4;
 
-            translate([
-                -carriage_length(MGN9C_carriage) / 2 - bracket_extra_width / 2,
-                mount_extra_width / 2 + carriage_width(mounting_carriage) / 2 - 0.2,
-                -(bracket_height - mount_thickness) + 1
-            ])
-            {
-                cube([
-                    carriage_length(MGN9C_carriage) + bracket_extra_width,
-                    metal_braket_space - mount_extra_width / 2 + 0.8,
-                    bracket_height
-                ]);
-            }
-
-            rotate([ -90, 90, 180 ])
-                translate([ 0, (carriage_length(MGN9C_carriage) + bracket_extra_width) / 2 - 5, -10.5 + 1 ])
-                    right_triangle([ 7.6, 5, 9.8 ]);
+            rotate([ -90, 90, 180 ]) translate(
+                [ 0, (carriage_length(MGN9C_carriage) + bracket_extra_width) / 2 - brace_thickness, -10.5 + 1 ])
+                right_triangle([ 7.6, brace_thickness, 9.8 ]);
             rotate([ -90, 90, 180 ])
                 translate([ 0, -((carriage_length(MGN9C_carriage) + bracket_extra_width) / 2), -10.5 + 1 ])
-                    right_triangle([ 7.6, 5, 9.8 ]);
+                    right_triangle([ 7.6, brace_thickness, 9.8 ]);
 
             translate([
-                (carriage_length(MGN9C_carriage) + bracket_extra_width) / 2 - 5, 5,
-                -(bracket_height - mount_thickness) + 1
-            ]) cube([ 5, 6, bracket_height - 1 ]);
+                (carriage_length(MGN9C_carriage) + bracket_extra_width) / 2 - brace_thickness, 5,
+                -(interface_height - mount_thickness) + 1
+            ]) cube([ brace_thickness, 6, interface_height - 1 ]);
             translate([
-                -(carriage_length(MGN9C_carriage) + bracket_extra_width) / 2, 5, -(bracket_height - mount_thickness) + 1
-            ]) cube([ 5, 6, bracket_height - 1 ]);
+                -(carriage_length(MGN9C_carriage) + bracket_extra_width) / 2, 5,
+                -(interface_height - mount_thickness) + 1
+            ]) cube([ brace_thickness, 6, interface_height - 1 ]);
+
+            color("blue")
+            {
+                translate([ -(5 - brace_thickness), 0, 1.4 ]) support();
+                translate([ -(5 - brace_thickness), 0, 4.6 ]) support();
+            }
         }
 
         m5_screw_holes();
@@ -484,11 +496,28 @@ module toolhead_carriage_base(mounting_carriage)
         {
             threaded_insert_trap();
         }
+        pcb_screw_holes();
 
         translate([ 0, 0, -6 ]) carriage_hole_positions(mounting_carriage)
         {
             cylinder(h = 10, r = washer_radius(M3_washer) + 0.3);
         };
+        translate([ (carriage_length(MGN9C_carriage) + bracket_extra_width) / 2, 15, -8.1 ]) rotate([ 90, 0, 0 ])
+            rotate(90) fillet(1, 20);
+        translate([ (carriage_length(MGN9C_carriage) + bracket_extra_width) / 2, 5, -8.1 ]) rotate([ 0, 0, 0 ])
+            rotate(90) fillet(1, 5);
+        translate([ (carriage_length(MGN9C_carriage) + bracket_extra_width) / 2, 5, -4.2 ]) rotate([ 52.2, 0, 0 ])
+            rotate(90) fillet(1, 7.3);
+        translate([ (carriage_length(MGN9C_carriage) + bracket_extra_width) / 2, -0.3, 0 ]) rotate([ 90, 0, 0 ])
+            rotate(0) rotate(90) fillet(1, 20);
+        translate([ (carriage_length(MGN9C_carriage) + bracket_extra_width) / 2, -13.5, 0 ]) rotate([ 0, 0, 0 ])
+            rotate(90) fillet(1, 8);
+
+        translate([ (carriage_length(MGN9C_carriage) + bracket_extra_width) / 2, 14.6, -10 ]) rotate(180) fillet(1, 20);
+        translate([ -(carriage_length(MGN9C_carriage) + bracket_extra_width) / 2, 14.6, -10 ]) rotate(-90)
+            fillet(1, 20);
+        translate([ 30, 14.6, 8 ]) rotate([ 180, 90, 0 ]) fillet(1, 60);
+        translate([ 30, 14.6, -8.1 ]) rotate([ 180, 90, 0 ]) rotate([ 0, 0, 90 ]) fillet(1, 60);
     }
 
     if (_show_rail && mount_type == "Threaded insert")
@@ -512,7 +541,14 @@ module carriage_assembly()
     pose(a = [ 55, 180, 75 ]) assembly("carriage")
     {
         rot = $preview ? -90 : 0;
-        rotate([ 0, rot, 0 ]) toolhead_carriage_MGN9C_stl();
+        rotate([ 0, rot, 0 ]) if (mounting_carriage == MGN9C_carriage)
+        {
+            toolhead_carriage_MGN9C_stl();
+        }
+        else
+        {
+            toolhead_carriage_MGN9H_stl();
+        }
 
         explode([ 0, -10, -5 ]) carriage_nuts();
         hidden()

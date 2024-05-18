@@ -91,7 +91,7 @@
             "carriage_rail_assembly": 1
         },
         "vitamins": {
-            "screw(M5_wafer_screw, 6): Screw M5 wafer head x  6mm": {
+            "screw(M5_wafer_screw, 4): Screw M5 wafer head x  4mm": {
                 "count": 2
             }
         },
